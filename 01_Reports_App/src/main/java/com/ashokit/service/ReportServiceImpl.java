@@ -2,7 +2,9 @@ package com.ashokit.service;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.ashokit.entity.CitizenPlan;
@@ -16,32 +18,47 @@ public class ReportServiceImpl implements IReportService {
 	
 	@Override
 	public List<String> getPlanNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return citizenRepo.getPlanName();
 	}
 
 	@Override
 	public List<String> getPlanStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		return citizenRepo.getPlanStatus();
 	}
 
 	@Override
 	public boolean exportExcel() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean exportPdf() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<CitizenPlan> search(SearchRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		CitizenPlan citizen=new CitizenPlan();
+		if(request.getPlanName()!=null && !"".equals(request.getPlanName())) {
+			citizen.setPlanName(request.getPlanName());
+		}
+		if(request.getPlanStatus()!=null && !"".equals(request.getPlanStatus())) {
+			citizen.setPlanStatus(request.getPlanStatus());
+		}
+		if(request.getGender()!=null && !"".equals(request.getGender())) {
+			citizen.setGender(request.getGender());
+		}
+		if(request.getStartDate()!=null && !"".equals(request.getStartDate())) {
+			citizen.setPlanStartDate(request.getStartDate());
+		}
+		if(request.getEndDate()!=null && !"".equals(request.getEndDate())) {
+			citizen.setPlanEndDate(request.getEndDate());
+		}
+		
+     	Example<CitizenPlan> example=Example.of(citizen);
+		List<CitizenPlan> list=citizenRepo.findAll(example);
+		return list;
 	}
 
 }

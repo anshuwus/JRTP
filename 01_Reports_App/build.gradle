@@ -30,7 +30,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
-	
+   
 }
 
 tasks.named('test') {
