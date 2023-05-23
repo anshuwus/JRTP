@@ -8,7 +8,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Example;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ashokit.entity.CitizenPlan;
@@ -74,7 +77,7 @@ public class ReportServiceImpl implements IReportService {
 		
 		String subject="Test Mail Subject";
 		String body="<h1>Test Java Mail API</h>";
-		String to="sweetuvi2508@gmail.com";
+		String to="anshuwus@gmail.com";
 		emailUtils.sendEmail(subject, body, to,file);
 		file.delete();
 		
@@ -82,13 +85,20 @@ public class ReportServiceImpl implements IReportService {
 	}
 
 	@Override
+	public ResponseEntity<InputStreamResource> showExcel(HttpServletResponse response,HttpHeaders headers) throws Exception {
+		List<CitizenPlan> citizen=citizenRepo.findAll();
+		ResponseEntity<InputStreamResource> showExcel = excelGen.showExcel(response,headers, citizen);
+		return showExcel;
+	}
+	
+	@Override
 	public boolean exportPdf(HttpServletResponse response)throws Exception{
 		List<CitizenPlan> citizen=citizenRepo.findAll();
 		File file=new File("Plans.pdf");
         pdfGen.generatePdf(response, citizen,file);
         String subject="Test Mail Subject";
 		String body="<h1>Test Mail body</h>";
-		String to="sweetuvi2508@gmail.com";
+		String to="anshuwus@gmail.com";
 		emailUtils.sendEmail(subject, body, to,file);
 		file.delete();
 	

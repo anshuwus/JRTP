@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +60,18 @@ public class ReportController {
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment;filename=plans.xls");
 		service.exportExcel(response);
+	}
+	
+	@GetMapping("/showExcel")
+	public ResponseEntity<InputStreamResource> showExcel(HttpServletResponse response)throws Exception{
+		// Set the response headers
+		HttpHeaders headers=new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=plans-data.html");
+       
+        // Generate the Excel file and write it to the response's output stream
+        ResponseEntity<InputStreamResource> showExcel = service.showExcel(response,headers);
+        return showExcel;
+
 	}
 	
 	@GetMapping("/pdf")

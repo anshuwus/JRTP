@@ -114,7 +114,7 @@
         
         <hr>
         
-           <b>Export: </b> <a href="./excel">EXCEL</a> <a href="./pdf">PDF</a>
+           <b>Export: </b> <a href="./excel">EXCEL</a> <a href="./pdf">PDF</a> <a href="./showExcel">ShowExcel</a>
         
         
     </div>
